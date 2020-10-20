@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Numbers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: black; color: white;">
+
+    <header class="jumbotron" style="background-color: green; color: white;">
+        <h1>Guess The Number</h1>
+    </header>
+
+    <main style="display: block; margin: 50px;">
+            <h2>Inputs</h2>
+            <div class="form-group">
+                <label for="guess">Your Guess:</label>
+                <input class="form-control" style="width: 75px;" type="text" id="guess" value="523" />
+            </div>
+            <button class="btn btn-light" onclick="yourGuess()">Submit</button>
+            <button class="btn btn-light" onclick="generateNumberToGuess(true)" value="New Game">New Game</button>
+            <div id="cheatShow" style="display: none;">
+                <input id="numberToGuess" type="text" />
+                <label for="numberToGuess">Number to guess</label>
+            </div>
+        <section id="guesses" class="guesses" style="margin-top: 10px">
+            <h2> Output </h2>
+            <textarea id="output" name="output" rows="5" style="width: 250px; height: 800px;"></textarea>
+        </section>
+    </main>
+</body>
+
+<script>
+
+    function yourGuess() {
+        var guess = document.getElementById('guess').value;
+        var guesses = document.getElementById('output');
+        if (guess == numToGuess) {
+            guesses.value = guesses.value + "\r" + "You have guessed correctly! (" + guess + ")";
+        } else if (guess > numToGuess) {
+            guesses.value = guesses.value + "\r" + "You guessing too high!(" + guess + ")";
+        } else {
+            guesses.value = guesses.value + "\r" + "You guessing too low!(" + guess + ")";
+        }
+    }
+
+    function generateNumberToGuess(confirmIt) {
+        var guesses = document.getElementById('output');
+        if (confirmIt && !confirm('Restart game with new number?')) {
+            return;
+        }
+
+        guesses.value = '';
+        numToGuess = Math.floor(Math.random() * 500);
+        guesses.value = "New number generated.\n";
+        document.getElementById('numberToGuess').value = '';
+        document.getElementById('cheatShow').style.display = 'none';
+    }
+
+    window.onload = function () {
+        generateNumberToGuess();
+    }
+
+
+</script>
+
+</html>
